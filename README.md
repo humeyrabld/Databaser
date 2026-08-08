@@ -46,30 +46,10 @@ Kör filerna i denna ordning:
 
 `PRAGMA foreign_keys = ON;` ska vara aktiverat för att SQLite ska kontrollera foreign keys.
 
-## Git – rekommenderad arbetsprocess
-
-```bash
-git init
-git add sql/create_tables.sql
-git commit -m "Create relational database tables"
-
-git add sql/insert_data.sql
-git commit -m "Add realistic seed data"
-
-git add sql/select_basic.sql sql/select_join.sql
-git commit -m "Add SELECT and JOIN queries"
-
-git add sql/updates.sql sql/deletes.sql
-git commit -m "Add CRUD update and delete operations"
-
-git add linq_comparison.txt security.txt reflection.txt README.md report.pdf
-git commit -m "Add LINQ comparison and project report"
-
-git branch -M main
-git remote add origin <DIN-GITHUB-REPO-URL>
-git push -u origin main
-```
-
 ## VG-fokus
 Projektet använder tydliga constraints, genomtänkta relationer, flera typer av SELECT-frågor,
 JOINs, LINQ-mappning, säkerhetsreflektion och meningsfull Git-struktur.
+
+## Projektstatus
+
+Databasen är testad lokalt med SQLite och innehåller fungerande CREATE, INSERT, SELECT, JOIN, UPDATE och DELETE-operationer.
