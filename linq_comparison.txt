@@ -1,0 +1,92 @@
+LINQ-JÄMFÖRELSER
+
+1. SQL: WHERE + ORDER BY
+
+SQL:
+SELECT Id, Title, DurationSeconds
+FROM Track
+WHERE DurationSeconds > 220
+ORDER BY DurationSeconds DESC;
+
+LINQ:
+var result = context.Tracks
+    .Where(t => t.DurationSeconds > 220)
+    .OrderByDescending(t => t.DurationSeconds)
+    .Select(t => new
+    {
+        t.Id,
+        t.Title,
+        t.DurationSeconds
+    })
+    .ToList();
+
+Mappning:
+- WHERE -> .Where(...)
+- ORDER BY ... DESC -> .OrderByDescending(...)
+- SELECT kolumner -> .Select(...)
+- Kör frågan och materialiserar resultatet -> .ToList()
+
+
+2. SQL: LIKE
+
+SQL:
+SELECT Id, Title
+FROM Track
+WHERE Title LIKE '%My%';
+
+LINQ:
+var result = context.Tracks
+    .Where(t => EF.Functions.Like(t.Title, "%My%"))
+    .Select(t => new
+    {
+        t.Id,
+        t.Title
+    })
+    .ToList();
+
+Mappning:
+- LIKE -> EF.Functions.Like(...)
+- WHERE-villkoret -> .Where(...)
+- Valda kolumner -> .Select(...)
+
+
+3. SQL: JOIN
+
+SQL:
+SELECT
+    Track.Title AS TrackTitle,
+    Album.Title AS AlbumTitle,
+    Artist.Name AS ArtistName
+FROM Track
+JOIN Album ON Track.AlbumId = Album.Id
+JOIN Artist ON Album.ArtistId = Artist.Id
+ORDER BY Artist.Name, Album.Title;
+
+LINQ:
+var result = context.Tracks
+    .Join(
+        context.Albums,
+        track => track.AlbumId,
+        album => album.Id,
+        (track, album) => new { track, album }
+    )
+    .Join(
+        context.Artists,
+        x => x.album.ArtistId,
+        artist => artist.Id,
+        (x, artist) => new
+        {
+            TrackTitle = x.track.Title,
+            AlbumTitle = x.album.Title,
+            ArtistName = artist.Name
+        }
+    )
+    .OrderBy(x => x.ArtistName)
+    .ThenBy(x => x.AlbumTitle)
+    .ToList();
+
+Mappning:
+- JOIN ... ON -> .Join(... key selector ...)
+- SELECT med alias -> anonymt objekt i .Select/projektionsdelen
+- ORDER BY -> .OrderBy(...)
+- Andra sorteringsnivån -> .ThenBy(...)

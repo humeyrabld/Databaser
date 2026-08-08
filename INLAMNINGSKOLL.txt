@@ -1,0 +1,19 @@
+INLÄMNINGSKOLL – MusicLibrary
+
+[OK] /sql/create_tables.sql
+[OK] /sql/insert_data.sql
+[OK] /sql/select_basic.sql
+[OK] /sql/select_join.sql
+[OK] /sql/updates.sql
+[OK] /sql/deletes.sql
+[OK] ER-diagram i report.pdf
+[OK] Tabell- och relationsförklaringar
+[OK] Datatyper och constraints
+[OK] 6 SELECT-queries
+[OK] 2 JOIN-queries
+[OK] 2 UPDATE
+[OK] 1 DELETE
+[OK] 3 SQL/LINQ-jämförelser
+[OK] 6 meningar om säkerhet
+[OK] Git/versionshantering
+[OK] Reflektion
